@@ -2,7 +2,43 @@
 
 ## Models
 
-Go into more detail about the turing models
+### Dataset Generation
+
+Dataset generation was handled in the *sample_model* method in each of the generation files.
+
+#### Ornstein_Uhlenbeck
+
+These make use of the *DifferenetialEquations* package to simulate an Ornstein Uhlenbeck process. This equation uses the differential equation form $dx_t = -\theta(\mu - x_t) dt + \sigma dW_t$.
+
+
+In the code we reference the process in the Fokker-Planck equation representation (representing the process in terms of a probability density function). Given the markovian nature then we can view the process as,
+
+
+$P(x,t | x', t') = \sqrt{\frac{\theta}{2\pi D(1-e^{-2\theta (t-t')})}}\exp{\left[ - \frac{\theta}{2D} \frac{\left( x-x'e^{-\theta (t - t')}\right)^2}{1-e^{-2\theta (t-t')}}\right]}$ where $D = \frac{\sigma^2}{2}$
+
+We refer to Amplitude as $\frac{D}{\theta}$ (the variance of the guassian as $(t - t') \rightarrow \infty$ ), and $\tau$ as $\frac{1}{\theta}$
+
+#### Noise
+
+In addition to the ornsein uhlenbeck process we also generate additional gaussian noise. Here we have two types, Thermal and Multiplicative. The thermal noise is sampled from a gaussian distribution with variance Tnoise. The muliplicative noise is generated as a normal centered about zero, and its variance proportional to the noise. These noises are then summed with the noisy process.
+
+
+Mixed noise is a comination of both. We define a ratio to dictate the relative thermal to multiplicative noise. Since the multiplicative noise is dimensionless, to make the ratio dimensionless, we multiply the multiplicative noise by the amplitude, although it may be just as reasonable to use the expectation of the absolute value of the signal $\sigma \sqrt{2}{pi}$ where sigma is the square root of the variance. **Review this paragraph**
+
+
+### Parameter Prediction
+
+
+#### Turing Model
+
+##### Thermal Model
+
+##### Multiplicative Model
+
+##### Mixed Model
+
+
+#### Posterior Sampling
 
 ## Data
 
