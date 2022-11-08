@@ -28,17 +28,24 @@ Mixed noise is a comination of both. We define a ratio to dictate the relative t
 
 ### Parameter Prediction
 
+The Probabilistic models and sampling was done using [Turing.jl](https://github.com/TuringLang/Turing.jl)
 
 #### Turing Model
 
+Two different models where created using the Turing interface assuming different types of noise. We treat the Ornstein Uhlenbeck parameters aswell as the true values of the signal at each sample as paramaters to be fit.
+
 ##### Thermal Model
 
-##### Multiplicative Model
+The thermal model is labeled as *oupn_thermal*, and simply assumes adative gaussian noise, whose STD is T_noise
 
 ##### Mixed Model
 
+The mixed model also assumes the same format as the thermal model, but with the addition of gaussian noise whose variance depends on the magnitude of the signal. This is labeled as *oupn_mt*, and assumes that the ratio to thermal and multiplicative noise is known. Since the therma and multiplicative noises are assumed to be gaussian and independant, we can treat the total noise as a gaussian with the appropriate variance.
+
 
 #### Posterior Sampling
+
+The posterior is sampled using the sample method provided by turing. The specifics of the sampling can be tweaked on a script by script basis.
 
 ## Data
 
