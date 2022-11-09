@@ -60,39 +60,6 @@ end
     rn ~ MvNormal(r,sqrt.(noise_ampl_t^2 .+ noise_ampl_m^2*abs.(r)))
 end
 
-function sample_model(dt, Tnoise, oupn, ratio)
-    #initial genreated data
-    μ = 0.0
-    σ = sqrt(2)
-    Θ = 1.0  #Θ is the inverse of the relaxation time
-    #Tnoise = 0.2
-    #dt = 0.05:0.05:2.0
-    W = OrnsteinUhlenbeckProcess(Θ,μ,σ,0.0,1.0)
-    prob = NoiseProblem(W,(0.0,500.0))
-    sol_pre = [solve(prob;dt=i).u for i in dt]
-    sol = [i[1:1500] for i in sol_pre]
-
-    #generate  thermal noise (uncomment this block and comment out multiplicative block)
-    noise_t = [rand.(Normal.(0,Tnoise),length(sol[i])) for i in 1:length(dt)]
-    #noisedata50  = sol .+ noise
-
-    #generate multiplicative noise
-    for i in eachindex(dt)
-       sol[i] = sol[i] + [rand.(Normal.(0,ratio*Tnoise*sqrt.(abs.(j)))) for j in (sol[i])]
-    end
-
-    noisedata50 = sol
-
-    #combine the two
-    noisedata50 = noisedata50 .+ noise
-
-    @time oupndata = [sample(oupn(noisedata50[i],length(noisedata50[i]),dt[i],ratio), NUTS(0.65), 1000) for i in eachindex(dt)]
-    #advi = ADVI(10, 1000)
-    #@time oupndata = [vi(oupn(noisedata50[i],length(noisedata50[i]),dt[i]), advi) for i in eachindex(dt)]
-    return oupndata
-
-end
-
 #note use double quotes for keyword argument (important in julia)
 function data_generation(dt, Tnoise,ratio=1; model="t")
     μ = 0.0
