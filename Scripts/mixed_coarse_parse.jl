@@ -20,7 +20,7 @@ function gen_name(name, data)
     return ["$name$i" for i in 1:size(data, 2)]
 end
 
-data = FileIO.load("mixed_points1500_rate0.1:0.1:2_mcmc1000_20cycles.jld2", "data")
+data = FileIO.load("", "data")
 
 mean_noise_t = mean.(map(x-> x[:noise_ampl_t], data))
 std_noise_t = std.(map(x-> x[:noise_ampl_t], data))

@@ -19,7 +19,7 @@ function data_parse(data)
     return mean_data
 end
 
-data = FileIO.load("mixed_ratio_0.1:0.1:10_tnoise_0.2_numcycles_1.jld2", "data")
+data = FileIO.load("", "data")
 
 mean_noise_t = mean.(map(x-> x[:noise_ampl_t], data))'
 std_noise_t = std.(map(x-> x[:noise_ampl_t], data))'

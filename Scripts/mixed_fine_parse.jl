@@ -9,7 +9,7 @@ using LaTeXStrings
 
 #thermal plotting
 
-x_axis = 0.05:0.05:1
+x_axis = 0.005:0.005:1
 
 function data_parse(data)
     mean_data = vec(mean(data, dims=1))
@@ -20,7 +20,7 @@ function gen_name(name, data)
     return ["$name$i" for i in 1:size(data, 2)]
 end
 
-data = FileIO.load("mixed_points1000_rate0.05:0.05:1_mcmc1000.jld2", "data")
+data = FileIO.load("", "data")
 
 mean_noise_t = mean.(map(x-> x[:noise_ampl_t], data))
 std_noise_t = std.(map(x-> x[:noise_ampl_t], data))
@@ -42,4 +42,4 @@ frame_data = DataFrame(col_data,:auto)
 
 rename!(frame_data, col)
 
-CSV.write("mixed_many", frame_data)
+CSV.write("mixed_fine", frame_data)
