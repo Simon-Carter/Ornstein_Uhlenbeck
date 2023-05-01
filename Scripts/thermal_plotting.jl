@@ -9,7 +9,7 @@ using LaTeXStrings
 
 #thermal plotting
 
-x_axis = 0.005:0.005:1
+x_axis = 0.05:0.05:1
 
 function data_parse(data)
     mean_data = vec(mean(data, dims=1))
@@ -20,10 +20,10 @@ function gen_name(name, data)
     return ["$name$i" for i in 1:size(data, 2)]
 end
 
-data = FileIO.load("thermal.jld2", "data")
+data = FileIO.load("mult_0.05_4.jld2", "data")
 
-mean_noise_t = mean.(map(x-> x[:noise_ampl], data))
-std_noise_t = std.(map(x-> x[:noise_ampl], data))
+mean_noise_t = mean.(map(x-> x[:noise_ampl_m], data))
+std_noise_t = std.(map(x-> x[:noise_ampl_m], data))
 
 mean_ampl = mean.(map(x-> x[:ampl], data))
 mean_tau = mean.(map(x-> x[:tau], data))
@@ -42,7 +42,7 @@ frame_data = DataFrame(col_data,:auto)
 
 rename!(frame_data, col)
 
-CSV.write("Thermal", frame_data)
+CSV.write("mult", frame_data)
 
 
 

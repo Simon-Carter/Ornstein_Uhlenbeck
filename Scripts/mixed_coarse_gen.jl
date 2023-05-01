@@ -13,7 +13,7 @@ data_total = Array{Chains}(undef, num_cycles, length(sample_rate))
 end
 
 
-#FileIO.save("mixed_points1500_rate0.1:0.1:2_mcmc1000_20cycles.jld2","data",data_total)
+FileIO.save("../Data/mixed_points1500_rate0.1:0.1:2_mcmc1000_20cycles_new.jld2","data",data_total)
 
 
 

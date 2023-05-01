@@ -41,6 +41,24 @@ end
     rn ~ MvNormal(r,noise_ampl)
 end
 
+# Ornstein-Uhlenbeck process with added MULTIPLICATIVE Gaussian noise (Mixed Model)
+@model oupn_m(rn,T,delta_t,::Type{R}=Vector{Float64}) where {R} = begin
+    ampl ~ Uniform(0.0,2.0)
+    tau ~ Uniform(0.1,2.0)
+    noise_ampl_m ~ Uniform(0.0,0.5)
+
+    
+    b = exp(-delta_t/tau)
+    r = R(undef, T)
+    
+    r[1] ~ Normal(0,sqrt(ampl))
+    
+    for i=2:T
+        r[i] ~ Normal(r[i-1]*b,sqrt(ampl*(1-b^2)))
+    end
+    rn ~ MvNormal(r,sqrt.(noise_ampl_m^2*abs.(r)))
+end
+
 # Ornstein-Uhlenbeck process with added MULTIPLICATIVE AND THERMAL Gaussian noise (Mixed Model)
 @model oupn_mt(rn,T,delta_t,ratio,::Type{R}=Vector{Float64}) where {R} = begin
     ampl ~ Uniform(0.0,2.0)
@@ -66,16 +84,17 @@ function data_generation(dt, Tnoise,ratio=1; model="t")
     σ = sqrt(2)
     Θ = 1.0
     W = OrnsteinUhlenbeckProcess(Θ,μ,σ,0.0,1.0)
-    prob = NoiseProblem(W,(0.0,1500.0))
+    prob = NoiseProblem(W,(0.0,7000.0))
     sol_pre = [solve(prob;dt=i).u for i in dt]
     sol = [i[1:1500] for i in sol_pre]
 
     noise_t = [rand.(Normal.(0,Tnoise),length(sol[i])) for i in 1:length(dt)]
 
-    Mnoise=ratio*Tnoise
+    Mnoise=Tnoise
 
     noise_m = copy(sol)
     for i in eachindex(dt)
+        #might be a bug ratio called twice on Mnoise
         noise_m[i] = [rand.(Normal.(0,ratio*Mnoise*sqrt.(abs.(j)))) for j in (sol[i])]
     end
 
@@ -93,4 +112,26 @@ function data_generation(dt, Tnoise,ratio=1; model="t")
     
     return noisedata .+ sol
 
+end
+
+# return multiplicative, thermal, and signal noise seperatly
+function data_generation_sep(dt, Tnoise,ratio=1)
+    μ = 0.0
+    σ = sqrt(2)
+    Θ = 1.0
+    W = OrnsteinUhlenbeckProcess(Θ,μ,σ,0.0,1.0)
+    prob = NoiseProblem(W,(0.0,1500.0))
+    sol_pre = [solve(prob;dt=i).u for i in dt]
+    sol = [i[1:1500] for i in sol_pre]
+
+    noise_t = [rand.(Normal.(0,Tnoise),length(sol[i])) for i in 1:length(dt)]
+
+    Mnoise=ratio*Tnoise
+
+    noise_m = copy(sol)
+    for i in eachindex(dt)
+        noise_m[i] = [rand.(Normal.(0,Mnoise*sqrt.(abs.(j)))) for j in sol[i]]
+    end
+
+    return [noise_t, noise_m, sol]
 end

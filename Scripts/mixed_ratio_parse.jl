@@ -11,7 +11,7 @@ using CSV
 
 #thermal plotting
 
-x_axis = 0.1:0.1:10
+x_axis = 0.1:0.1:5
 true_mean_noise_t = (map(x-> (0.2 ./(1 .+ x)), x_axis))
 
 function data_parse(data)
@@ -19,7 +19,7 @@ function data_parse(data)
     return mean_data
 end
 
-data = FileIO.load("", "data")
+data = FileIO.load("mixed_ratio_0.05.jld2", "data")
 
 mean_noise_t = mean.(map(x-> x[:noise_ampl_t], data))'
 std_noise_t = std.(map(x-> x[:noise_ampl_t], data))'
@@ -40,7 +40,7 @@ data = Dict(:ratio_mulitplicative_thermal => x_axis,
 
 CSV_data = DataFrame(data)
 
-CSV.write("mixed_ratio", CSV_data)
+CSV.write("mixed_ratio_0.05", CSV_data)
 
 #= Plotting stuff
 
