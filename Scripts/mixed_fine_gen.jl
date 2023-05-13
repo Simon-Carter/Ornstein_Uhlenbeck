@@ -1,5 +1,7 @@
 include("../model_generation.jl")
 
+#generates data for multiplicative and thermal model for a fine sample rate
+
 sample_rate = 0.005:0.005:1
 num_cycles = 1
 Tnoise = 0.2

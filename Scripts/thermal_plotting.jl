@@ -7,7 +7,7 @@ using Base.Threads
 using FileIO, JLD2
 using LaTeXStrings
 
-#thermal plotting
+#parse and plot the thermal data
 
 x_axis = 0.05:0.05:1
 

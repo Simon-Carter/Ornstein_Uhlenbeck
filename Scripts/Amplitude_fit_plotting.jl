@@ -109,7 +109,7 @@ power2_ou = plot(ou_avg_per2[1].freq[2:200], ou_avg_pow2[2:200], linecolor="grey
 ylabel!(L"\textrm{Power^2}")
 xlabel!("Frequency, Hz")
 title!("\nPower spectrum (second order)")
-ou_comb = plot(time_ou, power1_ou, power2_ou, size=(2200,600), margin=5mm, plot_title="Ornstein-Uhlenbeck Process", layout=(1,3),legend=false,
+ou_comb = plot(time_ou, power1_ou, power2_ou, size=(2400,600), margin=5mm, plot_title="Ornstein-Uhlenbeck Process", layout=(1,3),legend=false,
 plot_titlevspan=0.1, thickness_scaling = 2)
 savefig(ou_comb, "../Plots/ou_comb.png")
 
@@ -130,14 +130,14 @@ plot!(t_avg_per2[1].freq[2:600], t_avg_pow2[2:600], linecolor="grey25", label="T
 ylabel!(L"\textrm{Power^2}")
 xlabel!("Frequency, Hz")
 title!("\nPower spectrum (second order)")
-t_sum_comb = plot(time_t_sum, power1_t_sum, power2_t_sum, size=(2200,600), margin=5mm, plot_title="Ornstein-Uhlenbeck Process with Thermal Noise", 
+t_sum_comb = plot(time_t_sum, power1_t_sum, power2_t_sum, size=(2400,600), margin=5mm, plot_title="Ornstein-Uhlenbeck Process with Thermal Noise", 
 layout=(1,3), plot_titlevspan=0.1, thickness_scaling = 2)
 savefig(t_sum_comb, "../Plots/2t_sum_comb.png")
 
 
 #combine multiplicative pure and multiplicative ou
 time_m_sum = plot(0:0.01:3, mult_sum[1][1:301], legend=false, label="OU", linecolor="grey50", linewidth=2)
-title!( "Time series", weight="bold")
+title!( "\nTime series\n")
 ylabel!("Measurement")
 xlabel!("Time, s")
 power1_m_sum = plot(mult_sum_per[1].freq[2:600], mult_sum_pow[2:600], linecolor="grey50", yaxis=:log, ylim=(10^(-2.0),10^(1)), 
@@ -145,14 +145,14 @@ label="OU + Multiplicative", foreground_color_legend = nothing, background_color
 plot!(mult_avg_per[1].freq[2:600], mult_avg_pow[2:600], linecolor="grey25", ylim=(10^(-2.0),10^(1)), label="Multiplicative noise", linewidth=3)
 ylabel!("Power")
 xlabel!("Frequency, Hz")
-title!("Power spectrum")
+title!("\nPower spectrum\n")
 power2_m_sum = plot(mult_sum_per2[1].freq[2:800], mult_sum_pow2[2:800], linecolor="grey50", yaxis=:log, ylim=(10^(-0.5),10^(1.5)), 
 label="OU + Multiplicative", foreground_color_legend = nothing, background_color_legend = nothing, linewidth=3)
 plot!(mult_sum_per2[1].freq[2:800], mult_avg_pow2[2:800], linecolor="grey25", yaxis=:log, label="Multiplicative noise", linewidth=3)
 ylabel!(L"\textrm{Power^2}")
 xlabel!("Frequency, Hz")
-title!("Power spectrum (second order)")
-m_sum_comb = plot(time_m_sum, power1_m_sum, power2_m_sum, size=(2200,600), margin=5mm, layout=(1,3), 
+title!("\nPower spectrum (second order)\n", topmargin=5mm)
+m_sum_comb = plot(time_m_sum, power1_m_sum, power2_m_sum, size=(2400,600), margin=5mm, layout=(1,3), 
 plot_title="Ornstein-Uhlenbeck Process with Multiplicative Noise", plot_titlevspan=0.1, thickness_scaling = 2)
 savefig(m_sum_comb, "../Plots/2m_sum_comb.png")
 

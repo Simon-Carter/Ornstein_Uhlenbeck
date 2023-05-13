@@ -1,5 +1,7 @@
 include("../model_generation.jl")
 
+# generate data for a model with pure thermal noise
+
 sample_rate = 0.5:0.5:4
 num_cycles = 1
 Tnoise = 0.2

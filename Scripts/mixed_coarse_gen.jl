@@ -1,6 +1,8 @@
 include("../model_generation.jl")
 
-sample_rate = 0.05:0.05:1
+#generted data multiplicative and thermal noise for different sample rates
+
+sample_rate = 0.1:0.1:2
 num_cycles = 20
 Tnoise = 0.2
 ratio = 1
@@ -13,7 +15,7 @@ data_total = Array{Chains}(undef, num_cycles, length(sample_rate))
 end
 
 
-FileIO.save("../Data/mixed_points1500_rate0.1:0.1:2_mcmc1000_20cycles_new.jld2","data",data_total)
+# FileIO.save("../Data/mixed_points1500_rate0.1:0.1:2_mcmc1000_20cycles.jld2","data",data_total)
 
 
 

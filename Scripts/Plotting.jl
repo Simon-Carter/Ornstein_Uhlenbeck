@@ -1,4 +1,4 @@
-# Julia plotting script
+# Julia plotting script for the HMC models and EM algorithm
 
 using CSV
 using DataFrames
@@ -37,40 +37,39 @@ plot(f.ratio_mulitplicative_thermal, f.mean_amplitude)
 
 time_m_sum = plot(a.ratio_mulitplicative_thermal[1:50], a.mean_amplitude[1:50], linecolor="grey50", thickness_scaling = 2, size=(1000,600), ribbon=a.std_ampl[1:50], color = "grey50", fillalpha=.5, 
 label="Amplitude estimation", legend=:right, linewidth=2, ylim=(0,1.4))
-title!("Amplitude estimation 0.5𝜏")
 ylabel!("Amplitude")
+annotate!(1, 0.3, text("0.5𝜏", 26,"Computer Modern"))
 xlabel!(L"\sigma_m / \sigma_t")
 hline!([1], linestyle=:dash, linecolor="grey20", label="True amplitude", linewidth=2)
 savefig(time_m_sum, "../Plots/ratio_0.5.png")
 
 time_m_sum = plot(d.ratio_mulitplicative_thermal[1:50], d.mean_amplitude[1:50], linecolor="grey50", thickness_scaling = 2, size=(1000,600), ribbon=d.std_ampl, color = "grey50", fillalpha=.5, 
 label="Amplitude estimation", legend=:right, linewidth=2, ylim=(0,1.4))
-title!("Amplitude estimation 4𝜏")
 ylabel!("Amplitude")
 xlabel!(L"\sigma_m / \sigma_t")
+annotate!(0.75, 0.4, text("4𝜏", 26,"Computer Modern"))
 hline!([1], linestyle=:dash, linecolor="grey20", label="True amplitude", linewidth=2)
 savefig(time_m_sum, "../Plots/ratio_4.png")
 
 time_m_sum = plot(e.ratio_mulitplicative_thermal, e.mean_amplitude, linecolor="grey50", thickness_scaling = 2, size=(1000,600), ribbon=e.std_ampl, color = "grey50", fillalpha=.5, 
 label="Amplitude estimation", legend=:right, linewidth=2, ylim=(0,1.4))
-title!("Amplitude estimation 0.2𝜏")
 ylabel!("Amplitude")
 xlabel!(L"\sigma_m / \sigma_t")
+annotate!(1, 0.5, text("0.2𝜏", 26,"Computer Modern"))
 hline!([1], linestyle=:dash, linecolor="grey20", label="True amplitude", linewidth=2)
 savefig(time_m_sum, "../Plots/ratio_0.2.png")
 
 time_m_sum = plot(f.ratio_mulitplicative_thermal, f.mean_amplitude, linecolor="grey50", thickness_scaling = 2, size=(1000,600), ribbon=f.std_ampl, color = "grey50", fillalpha=.5, 
 label="Amplitude estimation", legend=:topright, linewidth=2, ylim=(0,1.6))
-title!("Amplitude estimation 0.05𝜏")
 ylabel!("Amplitude")
 xlabel!(L"\sigma_m / \sigma_t")
+annotate!(1, 0.5, text("0.05𝜏", 26,"Computer Modern"))
 hline!([1], linestyle=:dash, linecolor="grey20", label="True amplitude", linewidth=2)
 savefig(time_m_sum, "../Plots/ratio_0.05.png")
 
 
 time_m_sum = plot(g.ratio_deltat_tau1, g.mean_amplitude1, linecolor="grey50", thickness_scaling = 2, size=(1000,600), ribbon=g.std_ampl1, color = "grey50", fillalpha=.5, 
 label="Amplitude estimation", legend=:best, linewidth=2, ylim=(0,2.6))
-title!("Parameter Estimation")
 ylabel!("Parameters")
 xlabel!(L"\Delta t / \tau")
 hline!([1], linestyle=:dash, linecolor="grey20", label="True amplitude and tau", linewidth=2)
@@ -79,7 +78,6 @@ savefig(time_m_sum, "../Plots/mult_fail.png")
 
 time_m_sum = plot(helmut_data.dt, helmut_data.A_mean, linecolor="grey50", thickness_scaling = 2, size=(1000,800), ribbon=helmut_data.dA_mean, color = "grey50", fillalpha=.5, 
 label="Amplitude estimation", legend=:topleft, linewidth=2, ylim=(0,3.0), xlim=(0,3.0))
-title!("Maximum Estimation Algorithm")
 ylabel!("Parameter value")
 xlabel!(L"\Delta t / \tau")
 hline!([1], linestyle=:dash, linecolor="grey20", label="True Parameters", linewidth=2)
@@ -88,7 +86,6 @@ savefig(time_m_sum, "../Plots/EM.png")
 
 time_m_sum = plot(mcmcmean_data.dt, mcmcmean_data.A, linecolor="grey50", thickness_scaling = 2, size=(1000,800), ribbon=mcmcmean_data.dA, color = "grey50", fillalpha=.5, 
 label="Amplitude estimation", legend=:topleft, linewidth=2, ylim=(0,3.0), xlim=(0,3.0))
-title!("MCMC Algorithm")
 ylabel!("Parameter value")
 xlabel!(L"\Delta t / \tau")
 hline!([1], linestyle=:dash, linecolor="grey20", label="True Parameters", linewidth=2)

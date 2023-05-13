@@ -221,6 +221,12 @@ plot!(x1mn, label="x1 + noise")
 plot(x2, label="x2")
 plot!(x2mn, label="x2 + noise")
 
+
+
+
+
+
+
 #=
 # lets try ADVI
 advi = ADVI(10, 1000)

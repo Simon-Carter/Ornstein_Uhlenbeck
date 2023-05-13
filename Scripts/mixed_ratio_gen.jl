@@ -1,6 +1,8 @@
 include("../model_generation.jl")
 
 
+#generate data with a fixed sample rate but with various thermal to multiplicative noise ratios
+
 sample_rate = [0.05]
 ratio = 0.1:0.1:5
 Tnoise = 0.2 ./(1 .+ ratio)

@@ -1,5 +1,7 @@
 include("../model_generation.jl")
 
+#generate data for a different sample rate
+
 sample_rate = 0.05:0.05:1
 num_cycles = 20
 Tnoise = 0.2

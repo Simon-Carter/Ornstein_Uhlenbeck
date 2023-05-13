@@ -1,7 +1,7 @@
 using DifferentialEquations
-using Plots, StatsPlots
-using Distributions, Random, FFTW
-using Turing, ReverseDiff, Memoization
+using Plots
+using Distributions, Random
+using Turing, ReverseDiff
 using LinearAlgebra:Diagonal
 using Base.Threads
 using FileIO, JLD2
