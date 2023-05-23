@@ -19,6 +19,7 @@ function data_parse(data)
     return mean_data
 end
 
+#input the file that you saved in the gen script
 data = FileIO.load("mixed_ratio_0.05.jld2", "data")
 
 mean_noise_t = mean.(map(x-> x[:noise_ampl_t], data))'
@@ -40,25 +41,5 @@ data = Dict(:ratio_mulitplicative_thermal => x_axis,
 
 CSV_data = DataFrame(data)
 
+
 CSV.write("mixed_ratio_0.05", CSV_data)
-
-#= Plotting stuff
-
-plot(x_axis, data_parse(std_noise_t), label="Thermal noise", xlabel="ratio of multiplicative to thermal noise", ylabel="STD", title="Mixed Gaussian STD")
-
-#plot!(x_axis, data_parse(std_tau), label="Tau")
-
-plot!(x_axis, data_parse(std_ampl), label="Amplitude")
-
-savefig("mixed_ratio_std.png")
-
-plot(x_axis, data_parse(mean_noise_t), label="Thermal noise", xlabel="ratio of multiplicative to thermal noise", ylabel="Mean", title="Mixed Gaussian Mean")
-#plot!(x_axis, data_parse(mean_tau), label="Tau")
-plot!(x_axis, data_parse(mean_ampl), label="Amplitude")
-plot!(x_axis, true_mean_noise_t, label="True Noise", line=(:dot, 2))
-true_tau = [1.0 for i in x_axis]
-plot!(x_axis, true_tau, label="True Amplitude", line=(:dot, 2))
-
-savefig("mixed_ratio_mean.png")
-
-=#

@@ -20,6 +20,7 @@ function gen_name(name, data)
     return ["$name$i" for i in 1:size(data, 2)]
 end
 
+#input the file that you saved in the gen script
 data = FileIO.load("", "data")
 
 mean_noise_t = mean.(map(x-> x[:noise_ampl_t], data))

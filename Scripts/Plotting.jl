@@ -1,4 +1,4 @@
-# Julia plotting script for the HMC models and EM algorithm
+# Julia plotting script for the HMC models and EM algorithm, used in paper
 
 using CSV
 using DataFrames

@@ -16,7 +16,7 @@ data_total = Array{Chains}(undef, length(ratio), length(sample_rate))
 end
 
 
-    FileIO.save("mixed_ratio_0.05.jld2","data",data_total)
+FileIO.save("mixed_ratio_0.05.jld2","data",data_total)
 
 
 

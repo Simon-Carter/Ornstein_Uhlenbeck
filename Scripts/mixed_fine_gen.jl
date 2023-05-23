@@ -16,36 +16,3 @@ end
 
 
 #FileIO.save("mixed_ratio_0.1:0.1:10_tnoise_0.2_numcycles_1.jld2","data",data_total)
-
-
-
-# new formatting stuff
-#=
-mean_noise_t = mean.(map(x-> x[:noise_ampl_t], data))
-std_noise_t = std.(map(x-> x[:noise_ampl_t], data))
-
-mean_ampl = mean.(map(x-> x[:ampl], data))
-mean_tau = mean.(map(x-> x[:tau], data))
-std_ampl = std.(map(x-> x[:ampl], data))
-std_tau = std.(map(x-> x[:tau], data))
-
-plot(x_axis, data_parse(std_noise_t), label="Thermal noise", xlabel="Sample Rate", ylabel="STD", title="Mixed Gaussian STD")
-
-plot!(x_axis, data_parse(std_tau), label="Tau")
-
-plot!(x_axis, data_parse(std_ampl), label="Amplitude")
-
-savefig("mixed.png")
-
-
-plot(x_axis, data_parse(mean_noise_t), label="Thermal noise", xlabel="Sample Rate", ylabel="Mean", title="Mixed Gaussian Mean")
-plot!(x_axis, data_parse(mean_tau), label="Tau")
-plot!(x_axis, data_parse(mean_ampl), label="Amplitude")
-true_mean_noise_t = [0.2 for i in x_axis]
-plot!(x_axis, true_mean_noise_t, label="True Noise", line=(:dot, 2))
-true_tau = [1.0 for i in x_axis]
-plot!(x_axis, true_tau, label="True Tau and Amplitude", line=(:dot, 2))
-=#
-
-
-

@@ -7,7 +7,7 @@ using Base.Threads
 using FileIO, JLD2
 using LaTeXStrings
 
-#parse and plot the thermal data
+#parse and plot the thermal data generated from thermal_gen.jl
 
 x_axis = 0.05:0.05:1
 
@@ -20,6 +20,7 @@ function gen_name(name, data)
     return ["$name$i" for i in 1:size(data, 2)]
 end
 
+#input the file that you saved in the gen script
 data = FileIO.load("mult_0.05_4.jld2", "data")
 
 mean_noise_t = mean.(map(x-> x[:noise_ampl_m], data))
@@ -43,9 +44,6 @@ frame_data = DataFrame(col_data,:auto)
 rename!(frame_data, col)
 
 CSV.write("mult", frame_data)
-
-
-
 
 #plotting stuff
 
