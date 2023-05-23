@@ -9,6 +9,8 @@ using Distributions
 using LinearAlgebra
 using Turing: Variational
 
+
+
 # here we are simulating the signal of two coupled oscillators
 # with amplitudes A1 and A2 of kBT/k and kBT/(k+c) where c is the coupling constant
 # D = kBT/gamma
