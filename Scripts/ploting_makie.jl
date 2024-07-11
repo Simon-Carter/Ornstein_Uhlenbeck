@@ -73,19 +73,21 @@ xlabel!("Time (seconds)")
 
 
 #plot equivalent in CairoMakie
-data = CSV.read("EM.csv",  DataFrame)
+data = CSV.read("../Data/EM.csv",  DataFrame)
 f = Figure()
 ax = Axis(f[1, 1],
-    xlabel = L"\text{Time (seconds)}",
+    xlabel = "Time (seconds)",
     xlabelsize=20,
-    ylabel = L"\text{Amplitude}",
-    ylabelsize=20
+    ylabel = "Amplitude",
+    ylabelsize=24,
+    yticklabelsize  = 24,
+    xticklabelsize  = 24
     )
 band!(ax, 0:0.1:9.9, data[1:100,1] + data[1:100,2], data[1:100,1] - data[1:100,2],  color="grey60")
 lines!(ax, 0:0.1:9.9, data[1:100,1],color="grey40", label="EM prediction", linewidth=3)
 lines!(ax, 0:0.1:9.9, data[1:100,3], color = :black, label="OU", linewidth=3, linestyle=Linestyle([0.7, 1.4, 2.1, 2.8]))
 scatter!(ax, 0:0.1:9.9, data[1:100,4], color="grey90", label="OU + thermal", strokecolor=:black, strokewidth=1)
-axislegend(ax, position = (0.4, 1.0),  framevisible = false)
+axislegend(ax, position = (0.4, 1.0),  framevisible = false, labelsize = 20)
 f
 Makie.save("EM_fit.png", f)
 
@@ -134,7 +136,8 @@ hlines!(ax, 1.0; linestyle=:dash, linewidth=3, color = "grey30", label="True val
 
 axislegend(ax, position = :lt,  framevisible = false, labelsize = 20)
 
-xlims!(high = 3.5)
+xlims!(high = 3.0)
+ylims!(high = 4.0, low = 0.0)
 f
 Makie.save("EM.png", f)
 
@@ -160,6 +163,8 @@ lines!(ax, mcmcmean_data.dt,mcmcmean_data.tau ,color="grey40", linewidth=3, labe
 hlines!(ax, 1.0; linestyle=:dash, linewidth=3, color = "grey30", label="True value")
 
 axislegend(ax, position = :lt,  framevisible = false, labelsize = 20)
+xlims!(high = 3.0)
+ylims!(low = 0.0)
 f
 Makie.save("MCMC.png", f)
 
@@ -196,7 +201,7 @@ Makie.save("mult_fail.png", f)
 
 f = Figure()
 ax = Axis(f[1, 1],
-    xlabel = L"\sigma_m / \sigma_t",
+    xlabel = L"\sigma_M / \sigma_N",
     xlabelsize=30,
     ylabel = "OU Amplitude estimate",
     ylabelsize=28,
@@ -213,7 +218,7 @@ hlines!(ax, 1.0; linestyle=:dash, linewidth=3, color = "grey30", label="True val
 
 axislegend(ax, position = (0.8, 0.7),  framevisible = false, labelsize = 24)
 
-text!(0.25, 0.2 ,text=L"\tau = 0.5", fontsize=36)
+text!(0.25, 0.2 ,text=L"\Delta t/\tau = 0.5", fontsize=36)
 f
 Makie.save("ratio_0.5.png", f)
 
@@ -222,7 +227,7 @@ Makie.save("ratio_0.5.png", f)
 
 f = Figure()
 ax = Axis(f[1, 1],
-    xlabel = L"\sigma_m / \sigma_t",
+    xlabel = L"\sigma_M / \sigma_N",
     xlabelsize=30,
     ylabel = "OU Amplitude estimate",
     ylabelsize=28,
@@ -239,7 +244,7 @@ hlines!(ax, 1.0; linestyle=:dash, linewidth=3, color = "grey30", label="True val
 
 axislegend(ax, position = (0.8, 0.7),  framevisible = false, labelsize = 24)
 
-text!(0.25, 0.2 ,text=L"\tau = 4.0", fontsize=36)
+text!(0.25, 0.15 ,text=L"\Delta t/\tau = 4.0", fontsize=36)
 f
 Makie.save("ratio_4.png", f)
 
@@ -248,7 +253,7 @@ Makie.save("ratio_4.png", f)
 
 f = Figure()
 ax = Axis(f[1, 1],
-    xlabel = L"\sigma_m / \sigma_t",
+    xlabel = L"\sigma_M / \sigma_N",
     xlabelsize=30,
     ylabel = "OU Amplitude estimate",
     ylabelsize=28,
@@ -265,7 +270,7 @@ hlines!(ax, 1.0; linestyle=:dash, linewidth=3, color = "grey30", label="True val
 
 axislegend(ax, position = (0.8, 0.7),  framevisible = false, labelsize = 24)
 
-text!(0.25, 0.2 ,text=L"\tau = 0.2", fontsize=36)
+text!(0.25, 0.2 ,text=L"\Delta t/\tau = 0.2", fontsize=36)
 f
 Makie.save("ratio_0.2.png", f)
 
@@ -275,9 +280,9 @@ Makie.save("ratio_0.2.png", f)
 
 f = Figure()
 ax = Axis(f[1, 1],
-    xlabel = L"\sigma_m / \sigma_t",
+    xlabel = L"\sigma_M / \sigma_N",
     xlabelsize=30,
-    ylabel = "OU Amplitude estimate}",
+    ylabel = "OU Amplitude estimate",
     ylabelsize = 28,
     yticklabelsize  = 24,
     xticklabelsize  = 24
@@ -292,14 +297,15 @@ hlines!(ax, 1.0; linestyle=:dash, linewidth=3, color = "grey30", label="True val
 
 axislegend(ax, position = :rt,  framevisible = false, labelsize = 24)
 
-text!(0.25, 0.2 ,text=L"\tau = 0.05", fontsize=36)
+text!(0.25, 0.2 ,text=L"\Delta t/\tau = 0.05", fontsize=36)
 f
 Makie.save("ratio_0.05.png", f)
 
 nuts_data = CSV.read("../Data/nuts_chain.csv", DataFrame)
+nuts_data[!,"var_T"] = nuts_data[!,"ampl"] .* (1 .+ nuts_data[!,"mn_ampl"].^2)
 nuts_fig = Figure()
 nuts_names = names(nuts_data)
-nuts_labels = ["var OU", "var MN", "τ"]
+nuts_labels = ["A", L"\sigma_{M}", L"\tau"]
 for (i,name) in enumerate(nuts_names)
     ax = Axis(nuts_fig[i, 1]; ylabel=nuts_labels[i], ylabelsize=20)
     lines!(nuts_data[!,name],  color=:black)
@@ -313,7 +319,7 @@ for (i,name) in enumerate(nuts_names)
 end
 yspace = maximum(tight_yticklabel_spacing!, nuts_fig.content)
 for ax in nuts_fig.content
-    ax.yticklabelspace = yspace
+    ax.yticklabelspace = yspace +10
 end
 nuts_fig
 
